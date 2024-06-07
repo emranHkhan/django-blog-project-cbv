@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% block content %}
+<div class="container py-5">
+  <div class="row">
+    <div class="col-2 border py-5">
+      {% for category in categories %}
+        <a href="{% url "category_wise_post" category.slug %}" class="d-block">=>{{category.name}}</a>
+      {% endfor %}
+    </div>
+
+    <div class="col-10 border">
+        <div class="row p-5">
+        <h4 class="my-3">{{posts | length}} results found</h4>
+        {% for post in posts %}
+        <div class="col-sm-3 mb-3 mb-sm-0">
+          <a href="{% url "detail_post" post.id %}" class="text-decoration-none">
+          <div class="card">
+            <img src="{{post.image.url}}" class="{{post.title}}" alt="{{post.title}}">
+            <div class="card-body">
+              <h5 class="card-title">{{ post.title }}</h5>
+              <p class="card-text">{{ post.content }}</p>
+              <span>{{post.author.first_name}} {{post.author.last_name}}</span>
+              <div class="my-2">
+                {% for cat in post.category.all%}
+                <span class="badge rounded-pill text-bg-secondary"
+                  >{{cat.name}}</span
+                >
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
